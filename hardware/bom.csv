@@ -1,0 +1,31 @@
+Qty,Ref,Value,Package,Manufacturer,Part,Notes
+1,U1,ESP32-S3-WROOM-1-N8,Module,Espressif,ESP32-S3-WROOM-1-N8,8 MB quad flash. Classic CAN only.
+1,U2,ISO1042,SOIC-16,Texas Instruments,ISO1042BDW,"Isolated CAN. TXD hard-tied to VCC1. Tie VCC2 pins 11 and 16."
+1,U3,I2C isolator,SOIC-8,Texas Instruments,ISO1640BD,Bus-side ADS1115 to ESP32. 3.3 V both sides.
+1,U4,ADC 16-bit,VSSOP-10,Texas Instruments,ADS1115IDGSR,ADDR to bus GND. AIN0 is the 24 V divider.
+1,U5,5V to 5V 1W isolated,SIP,RECOM,RFM-0505S,Logic 5 V to bus-side 5 V. At least 3 kV isolation.
+1,U6,3.3V 1A LDO,SOT-223,Diodes Inc,AP7361C-33E-13,USB VBUS to ESP32 3.3 V.
+1,U7,3.3V 600mA LDO,SOT-23-5,Diodes Inc,AP2112K-3.3TRG1,Bus-side 5 V to 3.3 V for ADS1115 and ISO1640 side 2.
+1,J1,USB-A plug,Plug,,,Field connector. Not a USB port. See docs/hardware.md pinout.
+1,J2,USB-C receptacle,USB-C 16P,,,Logic power and native USB programming.
+1,L1,CAN common-mode choke,ACT45B,TDK,ACT45B-510-2P-TL003,Between J1 and U2.
+1,D1,CAN TVS,SOT-23,onsemi,NUP2105LT1G,CANH CANL and bus GND.
+1,D2,3.6V zener,SOD-123,Nexperia,BZT52C3V6,Clamp ADS1115 AIN0 to bus GND.
+1,D3,LED,0603,,,Activity. On while frames are arriving.
+2,SW1 SW2,Tactile,6mm,,,SW1 BOOT to GPIO0. SW2 reset to EN.
+1,R1,91.0k 1%,0603,,,24 V divider top. Bus side only.
+1,R2,12.0k 1%,0603,,,24 V divider bottom.
+1,R3,1k,0603,,,Series into ADS1115 AIN0.
+2,R4 R5,4.7k,0603,,,I2C pull-ups on the logic side to 3V3_LOG.
+2,R6 R7,4.7k,0603,,,I2C pull-ups on the bus side to 3V3_BUS.
+2,R8 R9,5.1k,0603,,,USB-C CC1 and CC2 to logic GND.
+2,R10 R11,10k,0603,,,EN and GPIO0 pull-ups to 3V3_LOG.
+1,R12,330,0603,,,LED series.
+1,R13,120 1%,0603,,,DNP. Termination footprint. Leave open.
+2,R14 R15,22,0603,,,USB D+ and D- series. Optional but recommended.
+1,C1,10uF 10V,0805,,,3V3_LOG bulk.
+4,C2 C3 C4 C5,100nF,0402,,,U2 VCC1 U2 VCC2 U6 U7.
+2,C6 C7,10uF 10V,0805,,,5V_BUS and 3V3_BUS bulk.
+1,C8,100nF,0402,,,Across R2.
+1,C9,1uF,0402,,,EN to logic GND.
+1,JP1,Termination jumper,0.1in header,,,Open. Stuff only if this node is a physical bus end.

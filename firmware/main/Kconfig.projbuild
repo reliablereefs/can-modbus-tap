@@ -1,0 +1,31 @@
+menu "CAN MODBUS Tap"
+
+config TAP_WIFI_SSID
+    string "Wi-Fi SSID"
+    default ""
+    help
+        Leave empty to keep recording on flash without uploading.
+
+config TAP_WIFI_PASSWORD
+    string "Wi-Fi password"
+    default ""
+
+config TAP_COLLECTOR_URL
+    string "Collector ingest URL"
+    default "http://192.168.1.10:8080/v1/frames"
+
+config TAP_DEVICE_ID
+    string "Device id override"
+    default ""
+    help
+        Letters, digits, hyphen, and underscore. Empty uses the Wi-Fi MAC.
+
+config TAP_BITRATE
+    int "Fixed CAN bitrate in bit/s (0 = autobaud)"
+    default 0
+    range 0 1000000
+    help
+        Use 0 until the bus rate is known. Supported fixed values are
+        25000, 50000, 100000, 125000, 250000, 500000, 800000, and 1000000.
+
+endmenu
