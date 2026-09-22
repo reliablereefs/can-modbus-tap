@@ -10,6 +10,7 @@ Run with KiCad's Python. From the repo:
 from __future__ import annotations
 
 import heapq
+import json
 import math
 import re
 import sys
@@ -182,6 +183,27 @@ def add_rect_edge(board, x0: float, y0: float, x1: float, y1: float) -> None:
     add_edge(board, x1, y0, x1, y1)
     add_edge(board, x1, y1, x0, y1)
     add_edge(board, x0, y1, x0, y0)
+
+
+def add_logo(board) -> None:
+    """Single-color Reliable Reefs mark on the front silkscreen, bottom right."""
+    rects = json.loads((ROOT / "logo_silk.json").read_text())
+    # Open corner by the antenna. The source image's top is the top of the mark.
+    x0, y0, x1, y1 = 72.46, 1.0, 88.5, 12.0
+    for left, top, right, bottom in rects:
+        shape = pcbnew.PCB_SHAPE(board, pcbnew.SHAPE_T_RECT)
+        shape.SetStart(pcbnew.VECTOR2I(
+            pcbnew.FromMM(x0 + left * (x1 - x0)),
+            pcbnew.FromMM(y0 + top * (y1 - y0)),
+        ))
+        shape.SetEnd(pcbnew.VECTOR2I(
+            pcbnew.FromMM(x0 + right * (x1 - x0)),
+            pcbnew.FromMM(y0 + bottom * (y1 - y0)),
+        ))
+        shape.SetLayer(pcbnew.F_SilkS)
+        shape.SetWidth(pcbnew.FromMM(0))
+        shape.SetFilled(True)
+        board.Add(shape)
 
 
 def add_text(board, text: str, x: float, y: float) -> None:
@@ -1083,6 +1105,7 @@ def main() -> None:
     add_text(board, "LOGIC", 4, 58)
     add_text(board, "BUS  do not join grounds", 50, 63)
     add_text(board, "J1 is 24 V CAN, not USB", 68, 48)
+    add_logo(board)
 
     failed = route(board, nets, footprints)
     # Logic pour stays left of the slot and out of the antenna keepout.
