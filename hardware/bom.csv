@@ -3,11 +3,11 @@ Qty,Ref,Value,Package,Manufacturer,Part,Notes
 1,U2,ISO1042,SOIC-16,Texas Instruments,ISO1042BDW,"Isolated CAN. TXD hard-tied to VCC1. Tie VCC2 pins 11 and 16."
 1,U3,I2C isolator,SOIC-8,Texas Instruments,ISO1640BD,Bus-side ADS1115 to ESP32. 3.3 V both sides.
 1,U4,ADC 16-bit,VSSOP-10,Texas Instruments,ADS1115IDGSR,ADDR to bus GND. AIN0 is the 24 V divider.
-1,U5,5V to 5V 1W isolated,SIP,RECOM,RFM-0505S,Logic 5 V to bus-side 5 V. At least 3 kV isolation.
+1,U5,5V to 5V 1W isolated,SIP4,RECOM,RFM-0505S,"Pin 1 -Vin, 2 +Vin, 3 -Vout, 4 +Vout. RECOM rates it 1 kVDC."
 1,U6,3.3V 1A LDO,SOT-223,Diodes Inc,AP7361C-33E-13,USB VBUS to ESP32 3.3 V.
 1,U7,3.3V 600mA LDO,SOT-23-5,Diodes Inc,AP2112K-3.3TRG1,Bus-side 5 V to 3.3 V for ADS1115 and ISO1640 side 2.
-1,J1,USB-A plug,Plug,,,Field connector. Not a USB port. See docs/hardware.md pinout.
-1,J2,USB-C receptacle,USB-C 16P,,,Logic power and native USB programming.
+1,J1,USB-A plug,USB3-A horizontal,Würth,692112030100,Field connector. Not a USB port. See docs/hardware.md pinout.
+1,J2,USB-C receptacle,USB-C 16P top-mount,GCT,USB4105,Logic power and native USB programming.
 1,L1,CAN common-mode choke,ACT45B,TDK,ACT45B-510-2P-TL003,Between J1 and U2.
 1,D1,CAN TVS,SOT-23,onsemi,NUP2105LT1G,CANH CANL and bus GND.
 1,D2,3.6V zener,SOD-123,Nexperia,BZT52C3V6,Clamp ADS1115 AIN0 to bus GND.
@@ -29,3 +29,4 @@ Qty,Ref,Value,Package,Manufacturer,Part,Notes
 1,C8,100nF,0402,,,Across R2.
 1,C9,1uF,0402,,,EN to logic GND.
 1,JP1,Termination jumper,0.1in header,,,Open. Stuff only if this node is a physical bus end.
+1,TP1,TWAI TX test point,Pad,,,GPIO5. Not connected to the transceiver.

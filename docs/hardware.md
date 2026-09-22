@@ -6,7 +6,7 @@ Power for the ESP32 comes from a separate USB-C receptacle. The 24 V pin is only
 
 ## Zones
 
-Keep one isolation slot across the board, at least 8 mm, with no copper under the ISO1042, the ISO1640, or the isolated DC-DC. Logic ground and bus ground meet nowhere.
+Keep logic ground and bus ground apart with a milled slot under the ISO1042 and the ISO1640. The slot is 2 mm wide, which fits between those packages' pads, and it runs 8 mm past the pads so the creepage path has to go around the slot. The RFM-0505S pins are 2.54 mm apart, so the slot stops before that module; its isolation is the module's own barrier. Logic ground and bus ground meet nowhere.
 
 | Zone | Ground | Supply |
 | --- | --- | --- |
@@ -66,7 +66,7 @@ USB-C VBUS feeds AP7361C-33 (1 A) for the ESP32 module. 10 µF on 3.3 V. CC1 and
 
 EN has 10 kΩ to 3.3 V, 1 µF to ground, and a button to ground. GPIO0 has 10 kΩ to 3.3 V and a BOOT button to ground. GPIO2 drives the activity LED through 330 Ω.
 
-`5V_USB` also feeds the RECOM RFM-0505S (or another 5 V to 5 V module, 1 W, at least 3 kV isolation). The module output is `5V_BUS`. Place it across the slot and follow its datasheet pinout.
+`5V_USB` also feeds the RECOM RFM-0505S, a 1 W SIP4 module. RECOM rates it 1 kVDC. Pin 1 is -Vin, pin 2 is +Vin, pin 3 is -Vout, and pin 4 is +Vout. The module output is `5V_BUS`.
 
 ## ESP32-S3-WROOM-1-N8
 
@@ -92,4 +92,4 @@ Measure the undriven differential pair against bus ground.
 
 ## Parts
 
-See [hardware/bom.csv](../hardware/bom.csv).
+See [hardware/bom.csv](../hardware/bom.csv). The schematic is [hardware/kicad/can-modbus-tap.kicad_sch](../hardware/kicad/can-modbus-tap.kicad_sch).

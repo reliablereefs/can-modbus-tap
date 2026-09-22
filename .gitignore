@@ -10,3 +10,10 @@ collector/collector
 *.db-journal
 *.db-wal
 *.db-shm
+hardware/kicad/*-backups/
+hardware/kicad/.history/
+hardware/kicad/*.kicad_prl
+hardware/kicad/fp-info-cache
+hardware/kicad/~*.lck
+hardware/kicad/__pycache__/
+hardware/kicad/*.pdf
