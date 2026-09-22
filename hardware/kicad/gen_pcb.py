@@ -24,10 +24,14 @@ NET = ROOT / "can-modbus-tap.net"
 BOARD_PATH = ROOT / "can-modbus-tap.kicad_pcb"
 KICAD_FP = Path("/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints")
 
-# 2 mm slot. It fits between the SOIC pad rows. It runs well past the
-# isolators so creepage has to go around the cut.
-SLOT = (46.0, 48.0, 26.0, 90.0)  # x0, x1, y0, y1
-BOARD = (0.0, 0.0, 124.0, 100.0)  # x0, y0, x1, y1
+# 2 mm slot. It fits between the SOIC pad rows and runs 8 mm past their
+# pads so creepage has to go around the cut. The outline stays inside
+# 100 x 100 mm, which is the cheap prototype size.
+SLOT = (38.0, 40.0, 17.0, 55.0)  # x0, x1, y0, y1
+BOARD = (0.0, 0.0, 90.0, 66.0)  # x0, y0, x1, y1
+# On-board part of the ESP32 antenna keepout. Rotation 0 points the antenna
+# off the bottom edge, so most of the keepout is not on the board.
+ANTENNA = (0.0, 0.0, 46.0, 9.5)  # x0, y0, x1, y1
 
 GRID = 0.25
 CLEARANCE = 0.2
@@ -37,51 +41,51 @@ SIGNAL_W = 0.25
 POWER_W = 0.25
 POWER = {"GND_LOG", "GND_BUS", "3V3_LOG", "3V3_BUS", "5V_USB", "5V_BUS"}
 
-# U1 signals face the isolators. The antenna keepout hangs off the top of
-# the logic half. USB-C and the regulator stay left of the isolation slot.
-# U5 pin 1 is the origin: pins 1-2 stay on the logic side of the converter.
+# Antenna points off the bottom edge. USB-C opens on the left edge, and the
+# USB-A plug's mating face is flush with the right edge. U5 pin 1 is the
+# origin: pins 1-2 stay on the logic side of the converter.
 PLACE = {
-    "J2": (7.0, 44.0, 270),
-    "R8": (16.0, 36.0, 90),
-    "R9": (20.0, 36.0, 90),
-    "U6": (30.0, 44.0, 0),
-    "C4": (40.0, 51.0, 0),
-    "C1": (40.0, 42.0, 90),
-    "U1": (22.0, 72.0, 180),
-    "R12": (8.0, 66.0, 90),
-    "D3": (8.0, 60.0, 0),
-    "R10": (36.0, 76.0, 90),
-    "C9": (36.0, 70.0, 0),
-    "C2": (36.0, 64.0, 0),
-    "TP1": (36.0, 58.0, 0),
-    "R4": (36.0, 52.0, 90),
-    "R5": (40.0, 46.0, 90),
-    "R14": (36.0, 30.0, 90),
-    "R15": (40.0, 30.0, 90),
-    "SW2": (8.0, 22.0, 0),
-    "SW1": (22.0, 22.0, 0),
-    "R11": (34.0, 22.0, 90),
-    "U5": (40.5, 12.0, 0),
-    "U2": (47.0, 72.0, 0),
-    "U3": (47.0, 58.0, 0),
-    "C3": (58.0, 78.0, 0),
-    "L1": (66.0, 72.0, 0),
-    "D1": (76.0, 72.0, 0),
-    "JP1": (88.0, 80.0, 0),
-    "R13": (88.0, 70.0, 90),
-    "J1": (114.0, 72.0, 0),
-    "U7": (62.0, 46.0, 0),
-    "C6": (72.0, 64.0, 0),
-    "C5": (80.0, 58.0, 0),
-    "C7": (72.0, 50.0, 0),
-    "R6": (83.0, 40.0, 0),
-    "R7": (83.0, 35.0, 0),
-    "U4": (74.0, 38.0, 0),
-    "R1": (62.0, 40.0, 90),
-    "R2": (62.0, 30.0, 90),
-    "C8": (72.0, 28.0, 0),
-    "R3": (82.0, 30.0, 90),
-    "D2": (92.0, 30.0, 0),
+    "J2": (5.2, 20.0, 270),
+    "R8": (11.5, 15.0, 90),
+    "R9": (11.5, 21.0, 90),
+    "U6": (6.0, 32.0, 0),
+    "C4": (24.0, 50.0, 0),
+    "C1": (30.0, 50.0, 90),
+    "U1": (22.0, 16.0, 0),
+    "R12": (12.0, 52.0, 90),
+    "D3": (6.0, 50.0, 0),
+    "R10": (30.0, 42.0, 90),
+    "C9": (22.0, 56.0, 0),
+    "C2": (28.0, 56.0, 0),
+    "TP1": (34.0, 18.0, 0),
+    "R4": (34.0, 12.0, 90),
+    "R5": (34.0, 24.0, 90),
+    "R14": (34.0, 30.0, 90),
+    "R15": (34.0, 34.0, 90),
+    "SW2": (1.5, 40.0, 0),
+    "SW1": (12.0, 40.0, 0),
+    "R11": (24.0, 42.0, 90),
+    "U5": (33.6, 60.0, 0),
+    "U2": (39.0, 42.0, 0),
+    "U3": (39.0, 28.0, 0),
+    "C3": (48.0, 42.0, 0),
+    "L1": (56.0, 42.0, 0),
+    "D1": (64.0, 42.0, 0),
+    "JP1": (60.0, 54.0, 0),
+    "R13": (64.0, 34.0, 90),
+    "J1": (80.06, 30.0, 0),
+    "U7": (52.0, 56.0, 0),
+    "C6": (50.0, 50.0, 0),
+    "C5": (48.0, 34.0, 0),
+    "C7": (64.0, 54.0, 0),
+    "R6": (60.0, 22.0, 0),
+    "R7": (60.0, 18.0, 0),
+    "U4": (52.0, 20.0, 0),
+    "R1": (46.0, 22.0, 90),
+    "R2": (46.0, 16.0, 90),
+    "C8": (52.0, 14.0, 0),
+    "R3": (60.0, 14.0, 90),
+    "D2": (70.0, 16.0, 0),
 }
 
 
@@ -233,11 +237,11 @@ def box_gap(x: float, y: float, box: tuple[float, float, float, float]) -> float
 
 def gnd_via_ok(board, x: float, y: float, net_name: str) -> bool:
     """A 0.6 mm via that stays off the slot, the antenna, and other copper."""
-    if not (1.5 <= x <= 122.5 and 1.5 <= y <= 98.5):
+    if not (1.5 <= x <= BOARD[2] - 1.5 and 1.5 <= y <= BOARD[3] - 1.5):
         return False
     if SLOT[0] - 0.8 <= x <= SLOT[1] + 0.8 and SLOT[2] - 0.8 <= y <= SLOT[3] + 0.8:
         return False
-    if x <= 46.5 and y >= 78.2:
+    if ANTENNA[0] <= x <= ANTENNA[2] and ANTENNA[1] <= y <= ANTENNA[3]:
         return False
     for fp in board.GetFootprints():
         for pad in fp.Pads():
@@ -288,10 +292,39 @@ def stitch_front_islands(board) -> int:
         for item in board.GetTracks():
             if isinstance(item, pcbnew.PCB_VIA) and item.GetNetname() == name:
                 vias.append(item.GetPosition())
+        back = next(
+            (other for other in board.Zones() if other.GetNetname() == name and other.IsOnLayer(pcbnew.B_Cu)),
+            None,
+        )
+        main_back = None
+        if back is not None:
+            back_polys = back.GetFilledPolysList(pcbnew.B_Cu)
+            if back_polys.OutlineCount():
+                main_back = max(
+                    (back_polys.Outline(index) for index in range(back_polys.OutlineCount())),
+                    key=lambda outline: outline.BBox().GetWidth() * outline.BBox().GetHeight(),
+                )
+
+        def in_pour(outline, x: float, y: float) -> bool:
+            if outline is None:
+                return False
+            point = pcbnew.VECTOR2I(pcbnew.FromMM(x), pcbnew.FromMM(y))
+            if not outline.PointInside(point):
+                return False
+            return all(
+                outline.PointInside(pcbnew.VECTOR2I(pcbnew.FromMM(x + dx), pcbnew.FromMM(y + dy)))
+                for dx, dy in ((0.3, 0), (-0.3, 0), (0, 0.3), (0, -0.3))
+            )
+
         for index in range(polys.OutlineCount()):
             outline = polys.Outline(index)
             bbox = outline.BBox()
-            if any(bbox.Contains(pos) and outline.PointInside(pos) for pos in vias):
+            # A via only counts if it also lands in the main back pour. A via
+            # into a back scrap leaves this fragment off the ground.
+            if any(
+                bbox.Contains(pos) and outline.PointInside(pos) and main_back is not None and main_back.PointInside(pos)
+                for pos in vias
+            ):
                 continue
             x0, x1 = pcbnew.ToMM(bbox.GetLeft()), pcbnew.ToMM(bbox.GetRight())
             y0, y1 = pcbnew.ToMM(bbox.GetTop()), pcbnew.ToMM(bbox.GetBottom())
@@ -303,19 +336,23 @@ def stitch_front_islands(board) -> int:
                     angle = 6.283185 * step / steps
                     x = round((cx + radius * math.cos(angle)) * 2) / 2
                     y = round((cy + radius * math.sin(angle)) * 2) / 2
-                    pt = pcbnew.VECTOR2I(pcbnew.FromMM(x), pcbnew.FromMM(y))
-                    if not outline.PointInside(pt):
-                        continue
-                    if not all(
-                        outline.PointInside(pcbnew.VECTOR2I(pcbnew.FromMM(x + dx), pcbnew.FromMM(y + dy)))
-                        for dx, dy in ((0.3, 0), (-0.3, 0), (0, 0.3), (0, -0.3))
-                    ):
-                        continue
-                    if gnd_via_ok(board, x, y, name):
+                    if in_pour(outline, x, y) and in_pour(main_back, x, y) and gnd_via_ok(board, x, y, name):
                         found = (x, y)
                         break
                 if found:
                     break
+            if found is None:
+                # Narrow fragments sit between the 0.5 mm spiral samples.
+                x_steps = range(int(x0 * 4), int(x1 * 4) + 1)
+                y_steps = range(int(y0 * 4), int(y1 * 4) + 1)
+                for ix in x_steps:
+                    for iy in y_steps:
+                        x, y = ix / 4.0, iy / 4.0
+                        if in_pour(outline, x, y) and in_pour(main_back, x, y) and gnd_via_ok(board, x, y, name):
+                            found = (x, y)
+                            break
+                    if found:
+                        break
             if found is None:
                 continue
             via = pcbnew.PCB_VIA(board)
@@ -638,8 +675,8 @@ def route(board, nets: dict[str, list[tuple[str, str]]], footprints: dict[str, p
             return 0
         return (max(box[2] for box in boxes) - min(box[0] for box in boxes)) + (max(box[3] for box in boxes) - min(box[1] for box in boxes))
 
-    # The antenna keepout is the top of the logic half. No copper there.
-    keepout = cover((0.0, 78.5, 46.0, 100.0))
+    # The antenna keepout is the bottom of the logic half. No copper there.
+    keepout = cover(ANTENNA)
 
     def rect_gap(x: float, y: float, box) -> float:
         dx = 0.0 if box[0] <= x <= box[2] else min(abs(x - box[0]), abs(x - box[2]))
@@ -651,7 +688,7 @@ def route(board, nets: dict[str, list[tuple[str, str]]], footprints: dict[str, p
             return False
         if SLOT[0] - 0.4 <= x <= SLOT[1] + 0.4 and SLOT[2] - 0.4 <= y <= SLOT[3] + 0.4:
             return False
-        if 0.0 <= x <= 46.0 and y >= 78.5:
+        if ANTENNA[0] <= x <= ANTENNA[2] and ANTENNA[1] <= y <= ANTENNA[3]:
             return False
         copper_r = max(0.0, need - CLEARANCE)
         for pad in pads:
@@ -731,24 +768,76 @@ def route(board, nets: dict[str, list[tuple[str, str]]], footprints: dict[str, p
             return (3, span(item), item)
         return (4, span(item), item)
 
-    # The ADC sense pad sits between two 0.5 mm neighbors, and both ends are
-    # where the 3.3 V trace wants to run. Lay this net down first, on its own
-    # centerline and clear of the supply pin, so the supply can still exit.
-    ain0_mm = [(72.0, 38.5), (69.5, 38.5), (69.5, 29.5), (90.0, 29.5)]
-    ain0_cells: list[tuple[int, int]] = []
-    for (x0, y0), (x1, y1) in zip(ain0_mm, ain0_mm[1:]):
-        gx0, gy0 = int(round(x0 / GRID)), int(round(y0 / GRID))
-        gx1, gy1 = int(round(x1 / GRID)), int(round(y1 / GRID))
-        if gx0 == gx1:
-            step = 1 if gy1 >= gy0 else -1
-            ain0_cells.extend((gx0, gy) for gy in range(gy0, gy1 + step, step))
-        else:
-            step = 1 if gx1 >= gx0 else -1
-            ain0_cells.extend((gx, gy0) for gx in range(gx0, gx1 + step, step))
-    commit(ain0_cells, pcbnew.F_Cu, SIGNAL_W, board.FindNet("AIN0"), front_block, set())
+    # The USB-C signal pads are 0.5 mm apart, so D+ and D- cannot share one
+    # exit. D- leaves to the left. D+ leaves to the right, between the
+    # connector and the ESP32, and both runs finish on the back.
+    def cells_along(points: list[tuple[float, float]]) -> list[tuple[int, int]]:
+        path: list[tuple[int, int]] = []
+        for (x0, y0), (x1, y1) in zip(points, points[1:]):
+            cx0, cy0 = int(round(x0 / GRID)), int(round(y0 / GRID))
+            cx1, cy1 = int(round(x1 / GRID)), int(round(y1 / GRID))
+            step_x = 0 if cx1 == cx0 else (1 if cx1 > cx0 else -1)
+            step_y = 0 if cy1 == cy0 else (1 if cy1 > cy0 else -1)
+            cell = (cx0, cy0)
+            if not path or path[-1] != cell:
+                path.append(cell)
+            while cell != (cx1, cy1):
+                cell = (cell[0] + step_x, cell[1] + step_y)
+                path.append(cell)
+        return path
+
+    dn_net = board.FindNet("USB_DN_C")
+    if dn_net is not None:
+        owned_dn: set[tuple[int, int]] = set()
+        commit(
+            cells_along([(9.00, 19.25), (6.25, 19.25)]),
+            pcbnew.F_Cu, SIGNAL_W, dn_net, front_block, owned_dn,
+        )
+        commit(
+            cells_along([(9.00, 20.25), (6.25, 20.25)]),
+            pcbnew.F_Cu, SIGNAL_W, dn_net, front_block, owned_dn,
+        )
+        add_via((int(round(6.25 / GRID)), int(round(19.25 / GRID))), dn_net, front_block, back_block)
+        add_via((int(round(6.25 / GRID)), int(round(20.25 / GRID))), dn_net, front_block, back_block)
+        commit(
+            cells_along([(6.25, 19.25), (6.25, 34.75), (32.75, 34.75)]),
+            pcbnew.B_Cu, SIGNAL_W, dn_net, back_block, owned_dn,
+        )
+        add_via((int(round(32.75 / GRID)), int(round(34.75 / GRID))), dn_net, front_block, back_block)
+        commit(
+            cells_along([(32.75, 34.75), (34.00, 34.75)]),
+            pcbnew.F_Cu, SIGNAL_W, dn_net, front_block, owned_dn,
+        )
+    dp_net = board.FindNet("USB_DP_C")
+    if dp_net is not None:
+        owned_dp: set[tuple[int, int]] = set()
+        commit(
+            cells_along([(9.00, 19.75), (10.25, 19.75), (10.25, 20.75), (9.00, 20.75)]),
+            pcbnew.F_Cu, SIGNAL_W, dp_net, front_block, owned_dp,
+        )
+        add_via((int(round(10.25 / GRID)), int(round(20.25 / GRID))), dp_net, front_block, back_block)
+        commit(
+            cells_along([(10.25, 20.25), (10.25, 30.75), (32.75, 30.75)]),
+            pcbnew.B_Cu, SIGNAL_W, dp_net, back_block, owned_dp,
+        )
+        add_via((int(round(32.75 / GRID)), int(round(30.75 / GRID))), dp_net, front_block, back_block)
+        commit(
+            cells_along([(32.75, 30.75), (34.00, 30.75)]),
+            pcbnew.F_Cu, SIGNAL_W, dp_net, front_block, owned_dp,
+        )
+    # C3's ground pad sits in a pour scrap. A short strap reaches the main
+    # bus pour. The ADC ground pins have no gap wide enough for the same trick.
+    gnd_bus = board.FindNet("GND_BUS")
+    if gnd_bus is not None:
+        owned_gnd: set[tuple[int, int]] = set()
+        commit(
+            cells_along([(48.50, 42.00), (48.50, 40.50)]),
+            pcbnew.F_Cu, SIGNAL_W, gnd_bus, front_block, owned_gnd,
+        )
+        add_via((int(round(48.50 / GRID)), int(round(40.50 / GRID))), gnd_bus, front_block, back_block)
 
     for name in sorted(named, key=route_rank):
-        if name == "AIN0":
+        if name in ("USB_DN_C", "USB_DP_C"):
             continue
         nodes = net_nodes(name)
         if len(nodes) < 2:
@@ -766,8 +855,8 @@ def route(board, nets: dict[str, list[tuple[str, str]]], footprints: dict[str, p
         # is published so the next net keeps clearance from it.
         net_f: set[tuple[int, int]] = set()
         net_b: set[tuple[int, int]] = set()
-        owned_f: set[tuple[int, int]] = set(landings(nodes[0], name, width))
-        owned_b: set[tuple[int, int]] = set(landings(nodes[0], name, width)) if nodes[0]["hole"] else set()
+        owned_f = set(landings(nodes[0], name, width))
+        owned_b = set(landings(nodes[0], name, width)) if nodes[0]["hole"] else set()
         for node in nodes[1:]:
             lands = landings(node, name, width)
             if not lands:
@@ -842,9 +931,30 @@ def route(board, nets: dict[str, list[tuple[str, str]]], footprints: dict[str, p
                 if min(span_x, span_y) >= 0.55:
                     cx = int(round(((box[0] + box[2]) / 2.0) / GRID))
                     cy = int(round(((box[1] + box[3]) / 2.0) / GRID))
-                    if point_clear(cx * GRID, cy * GRID, 0.3 + CLEARANCE, name):
+                    # The pad center can sit 0.5 mm from a track already on
+                    # the back. Walk to another cell still on the pad.
+                    via_cell = None
+                    candidates = [(cx, cy)]
+                    for radius in range(1, 5):
+                        for dx in range(-radius, radius + 1):
+                            candidates.append((cx + dx, cy - radius))
+                            candidates.append((cx + dx, cy + radius))
+                        for dy in range(-radius + 1, radius):
+                            candidates.append((cx - radius, cy + dy))
+                            candidates.append((cx + radius, cy + dy))
+                    for cell in candidates:
+                        px, py = cell[0] * GRID, cell[1] * GRID
+                        if not (box[0] <= px <= box[2] and box[1] <= py <= box[3]):
+                            continue
+                        if not point_clear(px, py, 0.3 + CLEARANCE, name):
+                            continue
+                        if not via_body_clear(cell):
+                            continue
+                        via_cell = cell
+                        break
+                    if via_cell is not None:
                         if not owned_b:
-                            home = (cx, cy)
+                            home = via_cell
                             for via_d in via_sites(owned_f, front_block | back_block | net_f | net_b, home):
                                 drop = astar({via_d}, owned_f, (front_pads | front_block) - owned_f - {via_d})
                                 if drop is None:
@@ -854,9 +964,9 @@ def route(board, nets: dict[str, list[tuple[str, str]]], footprints: dict[str, p
                                 owned_b.add(via_d)
                                 break
                         if owned_b:
-                            add_via((cx, cy), net_item, net_f, net_b)
-                            blocked_b = (back_pads | back_block) - owned_b - {(cx, cy)}
-                            back_path = astar({(cx, cy)}, owned_b, blocked_b)
+                            add_via(via_cell, net_item, net_f, net_b)
+                            blocked_b = (back_pads | back_block) - owned_b - {via_cell}
+                            back_path = astar({via_cell}, owned_b, blocked_b)
                             if back_path:
                                 commit(back_path, pcbnew.B_Cu, width, net_item, net_b, owned_b)
                                 linked = True
@@ -943,8 +1053,8 @@ def main() -> None:
     boxes = []
     for ref, fp in footprints.items():
         if ref == "U1":
-            # The module courtyard includes the antenna keepout, which is aimed
-            # off the top edge. Clash against the can body instead.
+            # The module courtyard includes the antenna keepout, which hangs
+            # off the bottom edge. Clash against the can body instead.
             cx, cy = PLACE[ref][0], PLACE[ref][1]
             box = (cx - 9.6, cy - 13.2, cx + 9.6, cy + 13.2)
         else:
@@ -964,36 +1074,34 @@ def main() -> None:
         print("courtyard overlaps:")
         for clash in clashes:
             print(" ", clash)
+        raise SystemExit(f"{len(clashes)} courtyard overlaps")
 
     x0, y0, x1, y1 = BOARD
     add_rect_edge(board, x0, y0, x1, y1)
     sx0, sx1, sy0, sy1 = SLOT
     add_rect_edge(board, sx0, sy0, sx1, sy1)
-    add_text(board, "LOGIC", 8, 16)
-    add_text(board, "BUS  do not join grounds", 78, 94)
-    add_text(board, "J1 is 24 V CAN, not USB", 78, 8)
+    add_text(board, "LOGIC", 4, 58)
+    add_text(board, "BUS  do not join grounds", 50, 63)
+    add_text(board, "J1 is 24 V CAN, not USB", 68, 48)
 
     failed = route(board, nets, footprints)
-    # Logic pour covers the logic half and the module body, and steps around
-    # the antenna keepout. Bus pour stays on the other side of the slot.
-    # One bus outline covers the converter tab and the rest of the bus side,
-    # so the two regions are the same copper. The tab starts at x=44.4, clear
-    # of the logic pour at x=44 and of U5 pin 2.
+    # Logic pour stays left of the slot and out of the antenna keepout.
+    # Above the slot it steps in so it covers U5 pins 1-2 and stays clear of
+    # the bus pour, which steps out to cover U5 pins 3-4.
     logic_pour = [
-        (1, 1), (44, 1), (44, 19.7), (45.2, 20.3), (45.2, 78),
-        (32, 78), (32, 84), (13, 84), (13, 78), (1, 78),
+        (1.0, 10.5), (37.2, 10.5), (37.2, 55.5), (36.7, 56.2), (36.7, 65.0), (1.0, 65.0),
     ]
     bus_pour = [
-        (44.4, 1.0), (123.0, 1.0), (123.0, 99.0),
-        (48.8, 99.0), (48.8, 19.7), (44.4, 19.7),
+        (46.5, 1.0), (89.0, 1.0), (89.0, 65.0), (37.6, 65.0),
+        (37.6, 56.2), (40.8, 55.5), (40.8, 10.5), (46.5, 10.5),
     ]
     for layer in (pcbnew.F_Cu, pcbnew.B_Cu):
         add_poly_zone(board, net_items["GND_LOG"], logic_pour, layer)
         add_poly_zone(board, net_items["GND_BUS"], bus_pour, layer)
     placed = 0
     for net_name, spots in (
-        ("GND_LOG", ((6, 8), (18, 8), (30, 8), (6, 32), (22, 32), (10, 52), (18, 48), (6, 70))),
-        ("GND_BUS", ((60, 10), (80, 12), (100, 12), (110, 30), (100, 50), (70, 90), (100, 90), (55, 40))),
+        ("GND_LOG", ((8, 14), (8, 36), (16, 52), (28, 36), (30, 52))),
+        ("GND_BUS", ((50, 12), (70, 12), (55, 28), (72, 48), (50, 60), (70, 58))),
     ):
         net = net_items[net_name]
         for x, y in spots:
@@ -1007,8 +1115,12 @@ def main() -> None:
             board.Add(via)
             placed += 1
     print(f"ground vias: {placed}")
+    # The refill after the first stitch splits a few more islands. A second
+    # pass ties those in; anything thinner than a via is left as pour copper.
     placed += stitch_front_islands(board)
     filler = pcbnew.ZONE_FILLER(board)
+    filler.Fill(board.Zones())
+    placed += stitch_front_islands(board)
     filler.Fill(board.Zones())
     pcbnew.SaveBoard(str(BOARD_PATH), board)
     print(f"wrote {BOARD_PATH}")
