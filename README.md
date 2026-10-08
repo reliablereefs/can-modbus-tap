@@ -4,8 +4,6 @@ Listen-only probe for a 24 V accessory port that uses a USB-A shell. An ESP32-S3
 
 The probe cannot transmit. The isolated CAN transceiver's TXD pin is tied to its logic supply, so the driver stays recessive, and the ESP32 TWAI controller runs in listen-only mode. Use it on equipment you are allowed to monitor.
 
-This repository is local only. It has no git remote.
-
 ## Bring-up before any connection
 
 The USB-A plug is not USB. Do not plug it into a computer, and do not use a normal USB cable between the equipment port and anything else. A 24 V pin in that shell will damage a USB host.
